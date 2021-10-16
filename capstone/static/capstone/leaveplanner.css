@@ -1,0 +1,102 @@
+#h3id2{
+    color: brown;
+   
+   }
+
+
+body{
+	background-color: aliceblue;
+}
+
+.przycisk{
+	min-width: 60px;
+	margin: 1px;
+	
+
+
+}
+
+
+.przycisk_div1 {
+    min-width: 40px;
+}
+
+.ramka1{
+
+	background-color: white;
+	margin: 2%;
+	border-radius: 10px;
+	border-color: gray;
+	border: 2px;
+	padding: 2px;
+}
+#ramka2, #ramka4{
+
+	
+	margin: 10px;
+	padding-top: 5px;
+	
+	
+}
+
+.ramka3{
+
+	background-color: lightgray;
+	margin: 2%;
+	border-radius: 10px;
+	border-color: gray;
+	border: 2px;
+	padding: 2px;
+}
+
+#previous1, #next1, #check1,#save1, #send1 {
+	min-width: 100px;
+	margin-right: 2px;
+	text-align:center;
+}
+#status1{
+	border: 2px;
+	border-color: black;
+	background-color: rgb(238, 144, 207); 
+	min-width: 150px;
+	text-align: center;
+	justify-items: center;
+	padding: 2px;
+	border-radius: 10px;
+	margin-left: 10px;
+	
+}
+
+#status2, #status3, #status4, #status5{
+	border: 2px;
+	border-color: black;
+	background-color: rgb(238, 144, 207); 
+	min-width: 150px;
+	text-align: center;
+	justify-items: center;
+	padding: 2px;
+	border-radius: 2px;
+	margin-left: 10px;
+	margin-right: 10px;
+	
+}
+
+#wykazDni{
+	
+	align-items: center;
+
+}
+#wykazDni p{
+	text-align: center;
+	border: solid;
+	border: 2px;
+	align-items: left;
+	border-radius: 10px;
+	background-color: lightcyan;
+
+}
+#ramka5{
+
+	background-color: cornsilk;
+	
+}

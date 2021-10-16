@@ -1,0 +1,1253 @@
+{% extends "capstone/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+
+{% block css %}
+<link href="{% static 'capstone/leavemanager.css' %}" rel="stylesheet">
+{% endblock %}
+  
+    <div id="wybor" class="container justify-content-center">
+            {% if user.is_authenticated %}
+            <hr>
+                <h3 id="h3id">Leave manager</h3>
+                
+            <hr>
+
+
+          
+          
+        
+        
+            <div class="d-flex flex-column">
+        
+                <div class="d-flex justify-content-center" id="blokYear">
+                    <a>Current year:</a>
+                    <a id="current_year">2000</a>
+                </div>        
+
+                <div class="d-flex justify-content-center" id="blokMonth">
+                    <a>Choose month:</a>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="month1">1</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="month2">2</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="month3">3</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="month4">4</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="month5">5</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="month6">6</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="month7">7</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="month8">8</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="month9">9</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="month10">10</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="month11">11</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="month12">12</button>
+                    <a> Selected:</a>
+                    <button type="button" class="btn btn-secondary btn-sm butMonth" id="currentMonth">1</button>
+                </div>    
+                
+                <div class="d-flex justify-content-center" id="blokDecade">
+                    <a>Choose month decade:</a>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="decade1">1</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="decade2">2</button>
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="decade3">3</button>
+                    <a> Selected:</a>
+                    <button type="button" class="btn btn-secondary btn-sm butMonth" id="currentDecade">1</button>
+                </div>   
+                
+                <div class="d-flex justify-content-center" id="blokOther">
+                    <a>Choose  page:</a>
+                    <!--
+                    <button type="button" class="btn btn-primary btn-sm butMonth" id="pageSelected">1</button>
+                   -->
+                    <select class="custom-select my-1 mr-sm-2" id="pageSelected">
+                      <!--
+                        <option selected>1</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    -->
+
+                    </select>
+                    
+                </div>   
+        
+                <div class="d-flex justify-content-center" id="blokOther">
+                     
+                    <a> Selected employee:</a>
+                    <button type="button" class="btn btn-secondary btn-sm butMonth" id="currentEmploye" style="min-width: 200px;">none</button>
+                    <a id="currentEmployeID" style="display:none;"></a><!--  style="display:none;" -->
+                    <a> Actions:</a>
+                    <button type="button" class="btn btn-success btn-sm butMonth" id="accept1" >Accept</button>
+                    <button type="button" class="btn btn-danger btn-sm butMonth" id="reject1" >Reject</button>
+                    <button type="button" class="btn btn-success btn-sm butMonth" id="acceptAll">Accept selected</button>
+                    <button type="button" class="btn btn-danger btn-sm butMonth" id="rejectAll">Reject selected</button>
+                </div>   
+        
+                <div class="d-flex justify-content-center" id="blok00" >
+                   
+                    <p id="blok5"></p>
+                    <p id="blok6"></p>
+                    <p id="blok7"></p>
+                </div>  
+            </div>
+            <hr>
+        
+
+
+
+
+
+
+
+
+
+
+            {% endif %}
+        
+    </div>
+
+    
+    
+   
+{% endblock %}
+
+{% block script %}
+    
+    <!--    ****************************************************************************************************************************      -->               
+<!--    ****************************************************************************************************************************      -->               
+<!--    ****************************************************************************************************************************      -->               
+<script type="text/babel">
+
+  
+
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    var rok = 1900;
+    var yyearr = JSON.parse(localStorage.getItem("yyearr"));
+    document.querySelector('#current_year').innerHTML=yyearr;
+    rok=yyearr;
+    //console.log("rok in manager="+rok);
+
+    
+    
+    //var dzienStart = "2021-1-1";
+    //var dzienEnd = "2021-1-10";
+    
+    var a = ["jeden","dwa"];
+
+    //var wykazNazwsk = ["Surname1 Name1","Surnafffffffffme2 Name2","Surname3 Name3","Surname4 Name4"];
+    //var wykazId = ["id1","id2","id3","id4"];
+
+    //var wykazNazwsk = ["Surname1 Name1","Surnafffffffffme2 Name2"];
+    var wykazNazwsk = [];
+    var wykazId = [];
+    var tableOfTables =[];
+    var tableStatuses = [];
+    var tableOfAvgDay = JSON.parse(localStorage.getItem("avgDay"));
+    var tableOfAvgAvg = JSON.parse(localStorage.getItem("avgAvg"));;
+     //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //var holidays =["2021-1-1","2021-1-6","2021-8-15","2021-9-29"];
+    var holidays = [];
+    holidays=JSON.parse(localStorage.getItem("holidays2"));
+    //console.log("holidays2=");
+    //console.log(holidays);
+
+    //console.log("tableOfAvgAvg=");
+    //console.log(tableOfAvgAvg);
+
+    //tableOfAvgDay ;
+    //tableOfAvgAvg 
+
+
+    setTimeout(GetEmployees2avg(),0);
+    GetEmployeesPagesCount();
+    
+
+
+
+
+
+    
+
+
+
+
+    
+    var days = ["Mo","Tue","Wen","Thr","Fr","Sat","Sun"];
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    function DayNameButton(day) {
+               return (
+                   <div>
+                    <button type="button" class="btn btn-secondary btn-sm przycisk" id = {day.miesiac+"_"+day.name} >
+                        <div class="przycisk_div1 d-flex justify-content-center">
+                            <a>{day.name}</a>
+                        </div>
+                    </button>
+                   </div>
+               );
+    }
+
+    
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    function AvgButton(day) {
+        let cos = "avg_"+day.datka;
+               return (
+                   <div>
+                    <button type="button" class="btn btn-secondary btn-sm przycisk" id={cos} >
+                        <div class="przycisk_div1 d-flex justify-content-center">
+                            <a>{day.avg}</a>
+                        </div>
+                    </button>
+                   </div>
+               );
+    }
+
+    
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    function DayButton(dzien2) {
+      
+        var dm = dzien2.dzien;
+        var m = dzien2.miesiac;
+        var y = dzien2.rok;
+        var datka = dzien2.datka;
+        var personId = dzien2.personId;
+        var newDate = new Date(y,m-1,dm); 
+        var dw = newDate.getUTCDay();
+        var nieAktywny = false;
+    
+        var klasa;
+        switch(dw){
+            case 5:
+                klasa = "btn btn-outline-warning btn-sm przycisk";
+                nieAktywny = true;
+    
+                break;
+    
+            case 6:
+                klasa = "btn btn-outline-danger btn-sm przycisk";
+                nieAktywny = true;
+                break;
+    
+            default:
+                klasa = "btn btn-outline-primary btn-sm przycisk";  
+               
+    
+        }
+    
+        var swieto = false;
+        for( var h in holidays ){
+            if(y+"-"+m+"-"+dm === holidays[h]){
+                    swieto = true;
+            }
+        }
+    
+        if(swieto){
+            klasa = "btn btn-outline-danger btn-sm przycisk";
+            nieAktywny = true;
+        }
+    
+        if (dzien2.poprzedni)   {
+            klasa = "btn btn-outline-light btn-sm przycisk";
+            nieAktywny = true;
+        }
+    
+       // console.log("datka w butonie "+datka);
+    
+        return (
+                   <div id={datka+"_d1_"+personId} >
+                        <button type="button" class={klasa} id={datka+"-"+personId} disabled={nieAktywny} firstKlik = "true" >
+                            <div class="przycisk_div1 d-flex justify-content-between" id={datka+"_d2_"+personId}>
+                                <a id={datka+"_a1_"+personId}></a>
+                                <a id={datka+"_a2_"+personId}></a>
+                                <a id={datka+"_a3_"+personId}>{dm}</a>
+                            </div>
+                        </button>
+                    </div>
+               );
+    }
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    
+    function toDateString(string){
+         var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        //return new Date(string).toLocaleDateString([],options);
+    return new Date(string).toString();
+    }
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+  
+    
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    function GenerujTablice3(zmienna){
+       // GetEmployees2avg();
+    
+    const one_day = 1000*60*60*24;
+    var x1 = zmienna.dzienStart;
+    var x2 = zmienna.dzienEnd;
+    var listaId = zmienna.wykazId;
+
+    //console.log("x1="+x1);
+    const tab1 = x1.split('-');
+   // console.log("tab1="+tab1);
+
+
+    //var d1 = toDateString(x1);
+    var d1 = toDateString(zmienna.dzienStart);
+   // console.log(d1);
+    var d2 = toDateString(x2);
+    var c =  Math.ceil((Math.abs(new Date(d2)-new Date(d1))/one_day)+1);
+        //console.log("c="+c);
+
+//    var y = (new Date(d1)).getUTCFullYear();
+  //  var m = (new Date(d1)).getUTCMonth()+1;
+    //var dm = (new Date(d1)).getUTCDate()+1;
+    var y = tab1[0];
+    var m = tab1[1];
+    var dm = tab1[2];
+
+    if (dm == 1 || dm == 11){
+        if (c>10)
+            c=10;
+    }    
+
+
+       // console.log("ttttt="+y+" "+m+" "+dm);
+   
+
+    
+    var tablica =[];
+    var w  = [];
+    var wierszN = [];
+
+    // ---------------------------------------     start of naglowek
+    {
+        if(zmienna.kolumna!=null){
+            wierszN.push(<th><button type="button" class="btn btn-secondary btn-sm przyciskName">status</button></th>);
+            //  wierszN.push(<th class="statusHeader"><span>status</span></th>);
+            wierszN.push(<th><button type="button" class="btn btn-secondary btn-sm przyciskName">check</button></th>);
+            wierszN.push(<th><button type="button" class="btn btn-secondary btn-sm przyciskName">Employee</button></th>);
+           
+        }else{
+
+          
+        }
+
+
+        var wiersz  = [];
+        var d3 = new Date(y,m-1,dm,0,0,0,0);
+        var personId = listaId[j];
+       // console.log(item+" w naglowku ------------="+d3);
+
+        var m2 = d3.getUTCMonth()+1;
+        if(m2<m){
+            //var tomorrow = new Date(d3);
+            //tomorrow.setDate(d3.getDate()+1);
+            //d3=tomorrow;
+
+        }
+        let dm2 = d3.getUTCDate();
+       // console.log(dm2+" "+dm);
+        let y2 = d3.getUTCFullYear();
+       // console.log(y2+" "+y);
+
+        if(dm2==11 || dm2 == 21){
+            var tomorrow = new Date(d3);
+            tomorrow.setDate(d3.getDate()-1);
+            d3=tomorrow;
+            console.log(" tutu");
+
+        }
+
+    var d4=d3;
+
+  
+        for( var i = 1 ; i<=c ; i++){
+            var y3 = d4.getUTCFullYear();
+            var m3 = d4.getUTCMonth()+1;
+            var dm3 = d4.getUTCDate();
+            var dw4 = d4.getUTCDay();
+            //console.log(days[dw4]);
+            
+
+          
+                wierszN.push(<th><DayNameButton name = {days[dw4]} miesiac = {m3}/></th>);
+
+            var tomorrow = new Date(d4);
+            tomorrow.setDate(d4.getDate()+1);
+            d4=tomorrow;
+
+        }
+       
+        tablica.push(<tr>{wierszN}</tr>);
+    }
+        // --------------------------------------     end of naglowek
+
+
+    for( var j = 0 ; j< listaId.length ; j++){    
+        var d3 = new Date(y,m-1,dm,0,0,0,0);
+        var personId = listaId[j];
+       // console.log(item+" przed------------="+d3);
+
+        var m2 = d3.getUTCMonth()+1;
+        if(m2<m){
+            var tomorrow = new Date(d3);
+            tomorrow.setDate(d3.getDate()+1);
+            d3=tomorrow;
+
+        }
+        var dm2 = d3.getUTCDate();
+        if(dm2<dm){
+            var tomorrow = new Date(d3);
+            tomorrow.setDate(d3.getDate()+1);
+            d3=tomorrow;
+        }
+
+        var wiersz  = [];
+       
+        if(zmienna.kolumna!=null){
+
+                let tdStatus = "status_"+personId;
+                let tdCheck  = "checkbox_"+personId;
+                let tdName   = "name_surname_"+personId;
+                let currentStatus = tableStatuses[j];
+            //wiersz.push(<td class="empStatus"><span  class="tdPersonSpan">approved</span></td>);
+            //wiersz.push(<td><span class="infoStatus" id={tdStatus}>accepted</span></td>);
+            wiersz.push(<td><span class="infoStatus" id={tdStatus}>{currentStatus}</span></td>);
+            wiersz.push(<td class="chekboks"><input class="form-check-input " type="checkbox" value="" id={tdCheck}></input></td>);
+            wiersz.push(<td class="empStatus"><span class="tdPersonSpan" id={tdName}>{zmienna.kolumna[j]}</span></td>);
+           
+        }else{
+
+          
+        }
+
+
+        for( var i = 1 ; i<=c ; i++){
+           // console.log(d3);
+            var y2 = d3.getUTCFullYear();
+            var m2 = d3.getUTCMonth()+1;
+            var dm2 = d3.getUTCDate();
+            //console.log("PRZEKAUJE "+y2+" "+m2+" "+dm2);
+            if(y2<y){
+                let tomorrow = new Date(d3);
+                tomorrow.setDate(d3.getDate()+1);
+                d3=tomorrow;
+                y2 = d3.getUTCFullYear();
+                m2 = d3.getUTCMonth()+1;
+                dm2 = d3.getUTCDate();
+
+            }
+
+           
+            
+            var datka = y2+"-"+m2+"-"+dm2;
+                    wiersz.push(<td class="tdCell" ><DayButton dzien = {dm2} miesiac = {m2} rok = {y2} poprzedni ={false} datka = {datka} personId={personId}/></td>);
+
+
+
+
+
+            var tomorrow = new Date(d3);
+            tomorrow.setDate(d3.getDate()+1);
+            d3=tomorrow;
+
+        }
+        tablica.push(<tr>{wiersz}</tr>);
+    }
+
+    //-------------------------------------
+        d1 = toDateString(zmienna.dzienStart);
+        // console.log(d1);
+        d2 = toDateString(x2);
+        c =  Math.ceil((Math.abs(new Date(d2)-new Date(d1))/one_day)+1);
+
+         y = tab1[0];
+         m = tab1[1];
+         dm = tab1[2];
+
+         if (dm == 1 || dm == 11){
+            if (c>10)
+                c=10;
+        }    
+
+
+
+        wierszN = [];
+        if(zmienna.kolumna!=null){
+            wierszN.push(<th><button type="button" class="btn btn-success btn-sm przyciskName"></button></th>);
+            //  wierszN.push(<th class="statusHeader"><span>status</span></th>);
+            wierszN.push(<th><button type="button" class="btn btn-success btn-sm przyciskName"></button></th>);
+            wierszN.push(<th><button type="button" class="btn btn-success btn-sm przyciskName">average absence</button></th>);
+           
+        }
+
+        {
+
+                var d3 = new Date(y,m-1,dm,0,0,0,0);
+           
+        // console.log(item+" w naglowku ------------="+d3);
+
+        var m2 = d3.getUTCMonth()+1;
+        if(m2<m){
+            var tomorrow = new Date(d3);
+            tomorrow.setDate(d3.getDate()+1);
+            d3=tomorrow;
+
+        }
+        var dm2 = d3.getUTCDate();
+        if(dm2<dm){
+            var tomorrow = new Date(d3);
+            tomorrow.setDate(d3.getDate()+1);
+            d3=tomorrow;
+        }
+        var y2 = d3.getUTCFullYear();
+        if(y2<y){
+            var tomorrow = new Date(d3);
+            tomorrow.setDate(d3.getDate()+1);
+            d3=tomorrow;
+        }    
+            
+
+         var d4=d3;
+            //console.log("dlugos miesiaca= "+c);
+
+            tableOfAvgDay = JSON.parse(localStorage.getItem("avgDay"));
+            tableOfAvgAvg = JSON.parse(localStorage.getItem("avgAvg"));;
+
+            //console.log("days in in= ");
+            //console.log(tableOfAvgDay);
+            //console.log("avg in in= ");
+            //console.log(tableOfAvgAvg);
+            for( var i = 1 ; i<=c ; i++){
+                var y3 = d4.getUTCFullYear();
+                var m3 = d4.getUTCMonth()+1;
+                var dm3 = d4.getUTCDate();
+                var dw4 = d4.getUTCDay();
+                //console.log(days[dw4]);
+                var numb = tableOfAvgDay.indexOf(y3+"-"+m3+"-"+dm3);
+                var srednia = tableOfAvgAvg[numb];
+                let sss =y3+"-"+m3+"-"+dm3;
+                //console.log("data="+sss+" avg is="+ srednia);
+                    wierszN.push(<th><AvgButton avg = {srednia} datka ={sss}/> </th>);
+
+                var tomorrow = new Date(d4);
+                tomorrow.setDate(d4.getDate()+1);
+                d4=tomorrow;
+
+            }
+
+
+        }
+
+
+        
+        tablica.push(<tr>{wierszN}</tr>);
+    //-------------------------------------
+
+
+return (
+    <div>
+            
+			<div class="d-flex  justify-content-center ramka3">
+				<div>{m}-{y}</div>
+			</div>
+            <table>
+               
+                {tablica}
+            </table>
+        </div>);
+
+}
+
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+
+
+    
+    //ReactDOM.render(<GenerujTablice2  dzienStart={dzienStart} dzienEnd={dzienEnd} osoby={a} />, document.querySelector("#blok4"));
+
+
+   
+   // ReactDOM.render(<GenerujTablice3  dzienStart={dzienStart} dzienEnd={dzienEnd} wykazId={wykazId} kolumna={wykazNazwsk}/>, document.querySelector("#blok5"));
+    //dzienStart = "2021-1-11";
+   // dzienEnd = "2021-1-20";
+   //ReactDOM.render(<GenerujTablice3  dzienStart={dzienStart} dzienEnd={dzienEnd} wykazId={wykazId} />, document.querySelector("#blok6"));
+  // dzienStart = "2021-1-21";
+   // dzienEnd = "2021-1-31";
+  // ReactDOM.render(<GenerujTablice3  dzienStart={dzienStart} dzienEnd={dzienEnd} wykazId={wykazId} />, document.querySelector("#blok7"));
+
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+   function buttonActionMonthButton(i ){
+      
+
+    let year = JSON.parse(localStorage.getItem("yyearr"));
+
+
+   // alert("kliked "+i);
+    let d1s = year+"-" + i + "-1";
+    let d1e = year+"-" + i + "-10";
+    let d2s = year+"-"+ i + "-11";
+    let d2e = year+"-" +i + "-20";
+    let dniWMiesiacu = 32 - new Date(rok, i-1, 32).getDate();
+    let d3s = year+"-" + i + "-21";
+    let d3e = year+"-" + i + "-" + dniWMiesiacu;
+    
+  
+
+    let przyciskMiesiaca = document.getElementById("currentMonth");
+    przyciskMiesiaca.innerHTML= i;
+
+        ReactDOM.render(<GenerujTablice3  dzienStart={d1s} dzienEnd={d1e} wykazId={wykazId} kolumna={wykazNazwsk}/>, document.querySelector("#blok5"));
+        ReactDOM.render(<GenerujTablice3  dzienStart={d2s} dzienEnd={d2e} wykazId={wykazId} />, document.querySelector("#blok6"));
+        ReactDOM.render(<GenerujTablice3  dzienStart={d3s} dzienEnd={d3e} wykazId={wykazId} />, document.querySelector("#blok7"));
+       // return false;
+       //console.log("wygenerowano");
+       colorButtons(i);
+
+
+     
+
+
+
+    }
+   //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    function colorButtons(i){
+        
+        let dniWMiesiacu = 32 - new Date(rok, i-1, 32).getDate();
+        for(var x=0;x<wykazId.length;x++){
+            for(let y = 1;y<=dniWMiesiacu;y++){
+                let idButton = rok+"-"+i+"-"+y+"-"+wykazId[x];
+                let baton =  document.getElementById(idButton);
+                if(baton != null)
+                baton.setAttribute("style","background-color:none;");
+                //console.log(idButton);
+            }
+
+
+        }
+            
+
+
+       
+        for( let x=0; x<tableOfTables.length;x++){
+             let tableTemp = tableOfTables[x];
+                for( let y=0; y<tableTemp.length;y++){
+                    let idButton = tableTemp[y]+"-"+wykazId[x];
+                    //console.log("id="+wykazId[x]+" ma free in "+tableTemp[y]);
+           
+                    let baton =  document.getElementById(idButton);
+                    if(baton != null){
+                       // console.log(idButton);
+                        baton.setAttribute("style","background-color:lightgreen;");
+                    }else{
+               
+                    }
+            
+            
+        }
+
+
+    }  
+
+
+    }
+    
+
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    function buttonActionDecadeButton(a){
+        let dec1 = document.getElementById("blok5");
+        let dec2 = document.getElementById("blok6");
+        let dec3 = document.getElementById("blok7");
+        let przyciskMiesiaca = document.getElementById("currentMonth");
+        let month = przyciskMiesiaca.innerHTML;
+        
+        let dec1Attrib =(dec1.offsetHeight === 0 && dec1.offsetWidth === 0)
+        let dec2Attrib = (dec2.offsetHeight === 0 && dec2.offsetWidth === 0)
+        let dec3Attrib = (dec3.offsetHeight === 0 && dec3.offsetWidth === 0)
+
+        let i = month;
+      //  console.log("atributes "+dec1Attrib+" "+dec2Attrib+" "+dec3Attrib);
+        let year = JSON.parse(localStorage.getItem("yyearr"));
+
+        let d2s = year+"-"+ i + "-11";
+        let d2e = year+"-" +i + "-20";
+        let dniWMiesiacu = 32 - new Date(rok, i-1, 32).getDate();
+        let d3s = year+"-" + i + "-21";
+        let d3e = year+"-" + i + "-" + dniWMiesiacu;
+
+      //  console.log(month);
+
+        switch(a){
+            case 1:
+                buttonActionMonthButton(month);
+                colorButtons(i);
+            break;
+            case 2:
+                
+                if(dec3Attrib == true && dec2Attrib == true){
+                    ReactDOM.render(<GenerujTablice3  dzienStart={d2s} dzienEnd={d2e} wykazId={wykazId} kolumna={wykazNazwsk}/>, document.querySelector("#blok5"));
+                    colorButtons(i);
+                }else if(dec3Attrib == true){
+                    ReactDOM.render(<GenerujTablice3  dzienStart={d2s} dzienEnd={d2e} wykazId={wykazId} kolumna={wykazNazwsk}/>, document.querySelector("#blok5"));
+                    ReactDOM.render(<GenerujTablice3  dzienStart={d3s} dzienEnd={d3e} wykazId={wykazId} />, document.querySelector("#blok6"));
+                    colorButtons(i);
+                }
+            break;
+            case 3:
+                
+                if(dec3Attrib == true && dec2Attrib == true){
+                    ReactDOM.render(<GenerujTablice3  dzienStart={d3s} dzienEnd={d3e} wykazId={wykazId} kolumna={wykazNazwsk}/>, document.querySelector("#blok5"));
+                    colorButtons(i);
+                }else if(dec3Attrib == true){
+                    ReactDOM.render(<GenerujTablice3  dzienStart={d2s} dzienEnd={d2e} wykazId={wykazId} kolumna={wykazNazwsk}/>, document.querySelector("#blok5"));
+                    ReactDOM.render(<GenerujTablice3  dzienStart={d3s} dzienEnd={d3e} wykazId={wykazId} />, document.querySelector("#blok6"));
+                    colorButtons(i);
+                }
+            break;
+
+
+        }
+        document.getElementById("currentDecade").innerHTML =a;
+       
+
+    }
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+
+    //GetEmployees2avg();
+    buttonActionMonthButton(1);
+    addActionToMonthButtons();
+    addActionToEmployeeName();
+    addActionToDecadeButtons();
+    addActionToAcceptOne();
+    addActionToRejectOne();
+    addActionToAcceptChoosen();
+    addActionToRejectChoosen();
+
+    document.querySelector('#pageSelected').addEventListener('change', () => refreshPage());
+
+ //-----------------------------------------------------
+ //-----------------------------------------------------
+ //-----------------------------------------------------
+function addActionToMonthButtons(){
+    for (let a = 1 ; a < 13; a++){
+        let button = document.getElementById("month"+a);
+			button.addEventListener("click", function() {
+                 buttonActionMonthButton(a);
+
+            });
+    }
+}
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+function addActionToEmployeeName(){
+
+    for (let a = 0 ; a < wykazId.length; a++){
+        let personId = wykazId[a];
+        let tdName   = "name_surname_"+personId;
+        let button = document.getElementById(tdName);
+		button.addEventListener("click", function() {
+                document.getElementById("currentEmploye").innerHTML =wykazNazwsk[a];
+                document.getElementById("currentEmployeID").innerHTML =wykazId[a];
+
+            });
+    }
+}
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+function addActionToRejectOne(){
+  
+   let button = document.getElementById("reject1");
+        button.addEventListener("click", function() {
+            //let info_about_plan = "plan is ok";
+            let text;
+            let info_about_plan = prompt("Please enter reason for rejection:", "remove free days in january");
+                    if (info_about_plan == null || info_about_plan == "") {
+                        info_about_plan = "User cancelled the prompt.";
+                    } else {
+
+                        let personID =  document.getElementById("currentEmployeID").innerHTML;
+                         //console.log("kliked reject id="+personID);
+                         let status_of_the_plan = "planning";
+              
+                         let year_of_plan = JSON.parse(localStorage.getItem("yyearr"));
+                        if(personID){
+                            changeEmployeeStatus(personID, status_of_the_plan,info_about_plan,year_of_plan);
+                             document.getElementById("status_"+personID).innerHTML =status_of_the_plan;
+                           }
+
+                    }
+            });
+}
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+function addActionToAcceptOne(){
+  
+  let button = document.getElementById("accept1");
+       button.addEventListener("click", function() {
+           let personID =  document.getElementById("currentEmployeID").innerHTML;
+         
+              let current_status = document.getElementById("status_"+personID).innerHTML;
+              let status_of_the_plan = "accepted";
+              let info_about_plan = "Plan is ok.";
+              let year_of_plan = JSON.parse(localStorage.getItem("yyearr"));
+              //console.log("kliked accept id="+personID);
+              //console.log("status="+current_status);
+           if(personID && current_status == "analyzing"){
+                //console.log("yese");
+               changeEmployeeStatus(personID, status_of_the_plan,info_about_plan,year_of_plan);
+               document.getElementById("status_"+personID).innerHTML =status_of_the_plan;
+
+           }else{
+            //console.log("noo");
+
+           }
+           
+           });
+
+
+
+
+}
+
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+function addActionToAcceptChoosen(){
+    let button = document.getElementById("acceptAll");
+       button.addEventListener("click", function() {
+        //alert("accept all");
+            for( let x = 0; x< wykazId.length;x++){
+                    let personID= wykazId[x];
+                    
+                   let checkbox = document.getElementById("checkbox_"+personID).checked;
+                   let current_status = document.getElementById("status_"+personID).innerHTML;
+                    //console.log(checkbox);
+                    if(checkbox && current_status == "analyzing"){
+
+                        let status_of_the_plan = "accepted";
+                        let info_about_plan = "Plan is ok.";
+                        let year_of_plan = JSON.parse(localStorage.getItem("yyearr"));
+                        changeEmployeeStatus(personID, status_of_the_plan,info_about_plan,year_of_plan);
+                        document.getElementById("status_"+personID).innerHTML =status_of_the_plan;
+                    }
+            }
+           });
+}
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+function addActionToRejectChoosen(){
+    let button = document.getElementById("rejectAll");
+       button.addEventListener("click", function() {
+        //alert("accept all");
+        let text;
+        let info_about_plan = prompt("Please enter reason for rejection:", "remove free days in january");
+        if (info_about_plan == null || info_about_plan == "") {
+                      info_about_plan = "User cancelled the prompt.";
+        } else{
+
+            for( let x = 0; x< wykazId.length;x++){
+                    let personID= wykazId[x];
+                    
+                   let checkbox = document.getElementById("checkbox_"+personID).checked;
+                    //console.log(checkbox);
+                    if(checkbox){
+
+
+                        {
+
+                            //let personID =  document.getElementById("currentEmployeID").innerHTML;
+                            //console.log("kliked reject id="+personID);
+                            let status_of_the_plan = "planning";
+              
+                            let year_of_plan = JSON.parse(localStorage.getItem("yyearr"));
+                            if(personID){
+                                changeEmployeeStatus(personID, status_of_the_plan,info_about_plan,year_of_plan);
+                                document.getElementById("status_"+personID).innerHTML =status_of_the_plan;
+                           }
+
+                    }
+
+
+
+
+                       
+                    }
+            }
+        }
+           });
+}
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+function addActionToDecadeButtons(){
+
+    let btn1d = document.getElementById("decade1");
+            btn1d.addEventListener("click", function() {
+                
+                //console.log("decade1");
+                buttonActionDecadeButton(1);
+
+
+            });
+    let btn2d = document.getElementById("decade2");
+            btn2d.addEventListener("click", function() {
+                
+                //console.log("decade2");
+                buttonActionDecadeButton(2);
+
+
+            });
+
+    let btn3d = document.getElementById("decade3");
+            btn3d.addEventListener("click", function() {
+                
+               // console.log("decade3");
+                buttonActionDecadeButton(3);
+
+
+            });        
+
+}
+    
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+
+
+
+
+   //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+
+window.addEventListener('resize', function() {
+        
+        let month = document.getElementById("currentMonth").innerHTML;
+        buttonActionMonthButton(month);
+        document.getElementById("currentDecade").innerHTML =1;
+        //console.log("resizing");
+        var w = window.innerWidth;
+        // document.getElementById("blok1").innerHTML=w;
+        if (w<800){
+            document.querySelector("#blok5").style.display = 'none';
+            document.querySelector("#blok6").style.display = 'none';
+            document.querySelector("#blok7").style.display = 'none';
+
+
+            document.querySelector("#blok5").style.display = 'block';
+
+        }else if (w>=1300){
+            document.querySelector("#blok5").style.display = 'none';
+            document.querySelector("#blok6").style.display = 'none';
+            document.querySelector("#blok7").style.display = 'none';
+
+            document.querySelector("#blok5").style.display = 'block';
+            document.querySelector("#blok6").style.display = 'block';
+            document.querySelector("#blok7").style.display = 'block';
+
+
+
+        }else{
+
+            document.querySelector("#blok5").style.display = 'none';
+            document.querySelector("#blok6").style.display = 'none';
+            document.querySelector("#blok7").style.display = 'none';
+
+            document.querySelector("#blok5").style.display = 'block';
+            document.querySelector("#blok6").style.display = 'block';
+
+
+        }
+
+
+
+
+
+        });
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    function GetEmployeesPagesCount(){
+    
+    fetch('/employeesscount')
+    .then(response => response.json())
+    .then(pages_count => {
+       
+       
+       
+        let selectForm = document.getElementById("pageSelected");
+        let pc =parseInt(pages_count.pages_count);
+       // console.log("count pages: "+pages_count.pages_count);
+      //  console.log(pc);
+        for( let i = 1; i <=pc;i++){
+            const e1 = document.createElement('option');
+            e1.id="pageOption"+i;
+            e1.innerHTML = i;
+            selectForm.appendChild(e1);
+           // console.log("i="+i);
+
+        }
+
+
+    })
+    .then(f=>{
+       // GetEmployees2avg();
+       // GetEmployees2(1);
+        
+
+    }).then(f=>{
+        //GetEmployees2avg();
+        GetEmployees2(1);
+        
+
+    });
+
+
+    }      
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    function GetEmployees2(pageNumber){
+
+        //console.log('start get employes, page no: '+pageNumber);
+        let rokk = JSON.parse(localStorage.getItem("yyearr"));
+        //console.log("rokk1="+rokk);
+        fetch('/employeesMM/'+pageNumber, {
+            method: 'PUT',
+            body: JSON.stringify({
+                year: rokk
+
+            })
+        })
+        .then(response => response.json())
+        .then(lista => {
+        
+        //console.log("lista = "+lista);
+        //console.log("lista lenght "+lista.lenght);
+        
+        //GetEmployees2avg();
+            //let selectForm = document.getElementById("am_blok3");
+            //selectForm.innerHTML = showPageOfEmployees(lista);
+            
+            //var array = []
+            wykazId=[];
+            wykazNazwsk=[];
+            tableOfTables=[];
+            tableStatuses =[];
+            let y=0;
+            for(let x in lista){
+            //  console.log("x= "+x);
+                let item = lista[y];
+                let item_id = lista[y].id;
+                let item_surname_name = lista[y].surname_name;
+                let item_status = lista[y].status;
+                //console.log(item);
+               // console.log(item_id);
+                wykazId.push(item_id);
+                wykazNazwsk.push(item_surname_name);
+                tableStatuses.push(item_status);
+                let tableTemp =[];
+                let friidays = lista[y].free_days;
+                    for (let y in friidays ){
+                        tableTemp.push(friidays[y]);
+
+                    }
+                tableOfTables.push(tableTemp);    
+
+
+                //let btnClicked = document.getElementById("btndecision_"+item_id);
+                //btnClicked.addEventListener('click', () => UpdateCredentialAction(item_id));
+            
+                //array.push(item);
+                y++;
+            }
+            let wybor = document.querySelector('#pageSelected').value;
+               // console.log(wybor);
+            //buttonActionMonthButton(pageNumber);
+            //GetEmployees2avg();
+            buttonActionMonthButton(1);
+            //console.log(tableOfTables);
+            addActionToEmployeeName();
+
+        });
+
+
+}
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+  function refreshPage(){
+    let wybor = document.querySelector('#pageSelected').value;
+        //console.log(wybor);
+        //GetEmployees(wybor);
+        //alert("selected page no "+ wybor);
+       // buttonActionMonthButton(wybor);
+       GetEmployees2(wybor);
+      // GetEmployees2avg();
+  }
+    
+
+ //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+  function changeEmployeeStatus(personID, status_of_the_plan,info_about_plan,year_of_plan){
+
+            //console.log("jer3 in change status="+year_of_plan);
+
+            let toUpdate = true;
+
+            fetch('/itstatus', {
+                method: 'PUT',
+                body: JSON.stringify({
+                    person_id:personID,
+                    to_update:toUpdate,
+                    year: year_of_plan,
+                    status:status_of_the_plan,
+                    info:info_about_plan
+                    
+                    
+                    
+
+                })
+            })	
+            .then(response => response.json())
+            .then(data => {
+                //console.log("my new status:");
+                //console.log(data);
+                //console.log("end of my new status:");
+                for(let d in data){
+                    //$("#status1").text(data[d].status);
+                    //$("#status3").html(data[d].info);
+                    //console.log((data[d]).info);
+                    //console.log($("#status3").text())
+                    //wymiar = data.dimension;
+                    //fillStats();
+                    if(data[d].status !="planning"){
+                        //$("#save1").hide();
+                        //$("#send1").hide();
+
+
+
+                    }
+
+
+
+                }
+                
+                
+
+
+
+            });
+
+
+
+}
+ //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+
+    function GetEmployees2avg(){
+
+        tableOfAvgDay=[];
+        tableOfAvgAvg=[];
+
+//console.log('start get employes avg');
+let rokk = JSON.parse(localStorage.getItem("yyearr"));
+//c//onsole.log("rokk1="+rokk);
+fetch('/employeesMMavg', {
+    method: 'PUT',
+    body: JSON.stringify({
+        year: rokk
+
+    })
+})
+.then(response => response.json())
+.then(lista => {
+
+    //console.log("lista avg = "+lista);
+    //console.log("lista avg lenght "+lista.lenght);
+        
+    for(let x in lista){
+       // console.log("x = "+lista[x].str_date +" ; "+lista[x].count);
+        tableOfAvgDay.push(lista[x].str_date);
+        tableOfAvgAvg.push(lista[x].count);
+
+    }
+    //console.log(tableOfAvgAvg);
+   
+
+})
+.then(f=>{
+    //console.log("print day in func: ");
+    //console.log(tableOfAvgDay);
+    //console.log("print avg in func: ");
+    //console.log(tableOfAvgAvg);
+
+});
+
+
+}
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+
+
+
+
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+    //-----------------------------------------------------
+  
+    </script>
+    
+    <!--    ****************************************************************************************************************************      -->               
+    <!--    ****************************************************************************************************************************      -->               
+    <!--    ****************************************************************************************************************************      -->               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
